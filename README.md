@@ -25,7 +25,7 @@ This is a Hello World Flutter project designed for beginners to learn cross-plat
 
 1. Clone this repository:
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/CoreProc/flutter-base.git
    cd flutter-base
    ```
 
