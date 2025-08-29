@@ -1,0 +1,50 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Source code
+*.dart text
+*.yaml text
+*.yml text
+*.json text
+*.xml text
+*.gradle text
+*.properties text
+*.kt text
+*.swift text
+*.m text
+*.h text
+*.cpp text
+*.cc text
+*.c text
+
+# Documentation
+*.md text
+*.txt text
+README text
+LICENSE text
+CHANGELOG text
+
+# Config files
+.gitignore text
+.gitattributes text
+pubspec.yaml text
+analysis_options.yaml text
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.svg binary
+*.pdf binary
+*.zip binary
+*.tar.gz binary
+*.keystore binary
+*.jks binary
+
+# Platform specific
+*.pbxproj merge=union
+
+# Flutter specific
+pubspec.lock linguist-generated=false

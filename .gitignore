@@ -1,0 +1,100 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# VS Code related
+# Include .vscode/ for shared settings, but exclude personal settings
+.vscode/settings.json
+.vscode/launch.json
+.vscode/extensions.json
+.vscode/.ropeproject
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+/coverage/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+# Web related
+/web/build/
+
+# macOS related
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IDE related
+.vscode/
+*.code-workspace
+
+# Flutter version management
+.fvm/
+
+# Environment variables (never commit sensitive data)
+.env
+.env.local
+.env.production
+.env.staging
+
+# Firebase
+google-services.json
+GoogleService-Info.plist
+firebase_options.dart
+
+# API Keys and secrets
+**/android/app/google-services.json
+**/ios/Runner/GoogleService-Info.plist
+**/lib/firebase_options.dart
+
+# Custom files that shouldn't be in repo
+*.keystore
+*.jks
+
+# Generated files
+**/generated_plugin_registrant.dart
+**/GeneratedPluginRegistrant.swift
+**/GeneratedPluginRegistrant.m
+
+# Build outputs
+**/build/
+**/out/
+
+# Package managers
+node_modules/
+.packages
+.flutter-plugins
+
+# Test coverage
+coverage/
+test/.test_coverage.dart
