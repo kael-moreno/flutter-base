@@ -1,29 +1,36 @@
-# Flutter Base Project
+# Flutter Base Project - Clean Architecture Edition
 
-A foundational Flutter application template designed to serve as a starting point for future mobile and web projects.
+A foundational Flutter application template implementing **Clean Architecture + Riverpod** best practices, designed to serve as a starting point for scalable mobile and web projects.
 
-## 📱 Project Overview
+## 🏗️ Architecture Overview
 
-This repository serves as a **base template** for all future Flutter projects. It provides a clean, well-structured foundation that can be cloned and customized for specific project requirements. 
+This project demonstrates **Clean Architecture** principles with:
+- **Domain Layer**: Pure business logic (entities, use cases, repository interfaces)
+- **Data Layer**: External data sources and repository implementations  
+- **Presentation Layer**: UI components with Riverpod state management
 
-**Key Features:**
-- Clean project structure without path space issues
-- Proper `.gitignore` and `.gitattributes` configuration  
-- Multi-platform support (Android, iOS, and Web)
-- VS Code configuration with Flutter extension
-- Comprehensive documentation and setup instructions
-- Repository-ready configuration following best practices
+**Example**: A simple counter app showcasing proper separation of concerns, dependency injection, error handling, and state management.
 
-## 🎯 Purpose
+## 📱 Project Features
 
-This base project eliminates the repetitive setup work for new Flutter applications by providing:
-- ✅ **Standardized project structure**
-- ✅ **Pre-configured development environment**
-- ✅ **Clean Git configuration** 
-- ✅ **Documentation templates**
-- ✅ **Platform-specific optimizations**
+**🎯 Clean Architecture Implementation:**
+- ✅ **Feature-based folder structure**
+- ✅ **Dependency inversion principle**
+- ✅ **Pure domain logic (no Flutter dependencies)**
+- ✅ **Repository pattern for data access**
+- ✅ **Use cases for business operations**
 
-Use this as your starting point, then customize it for your specific project needs.
+**🔧 Modern State Management:**
+- ✅ **Riverpod for dependency injection**
+- ✅ **StateNotifier for complex state**
+- ✅ **Functional error handling with Either**
+- ✅ **Loading and error states**
+
+**📦 Production-Ready Setup:**
+- ✅ **Multi-platform support** (Android, iOS, Web)
+- ✅ **Proper error handling**
+- ✅ **Testing strategy foundation**
+- ✅ **Clean Git configuration**
 
 ## 🚀 Getting Started
 
