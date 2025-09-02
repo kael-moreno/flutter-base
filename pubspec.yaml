@@ -44,6 +44,9 @@ dependencies:
   # Dependency Injection
   get_it: ^7.6.4
   
+  # HTTP Client
+  dio: ^5.3.4
+  
   # Code Generation
   freezed_annotation: ^2.4.1
   json_annotation: ^4.8.1

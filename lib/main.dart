@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'features/counter/presentation/pages/counter_page.dart';
+import 'home_page.dart';
 
 void main() {
   runApp(
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const CounterPage(),
+      home: const HomePage(),
     );
   }
 }

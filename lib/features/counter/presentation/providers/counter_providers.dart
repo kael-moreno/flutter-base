@@ -32,3 +32,29 @@ final incrementCounterUseCaseProvider = Provider<IncrementCounter>((ref) {
 final resetCounterUseCaseProvider = Provider<ResetCounter>((ref) {
   return ResetCounter(ref.read(counterRepositoryProvider));
 });
+
+/// Simple implementation of CounterLocalDataSource using in-memory storage
+class CounterLocalDataSourceImpl implements CounterLocalDataSource {
+  static int _counter = 0;
+
+  @override
+  Future<int> getCounter() async {
+    // Simulate async operation
+    await Future.delayed(const Duration(milliseconds: 100));
+    return _counter;
+  }
+
+  @override
+  Future<void> saveCounter(int value) async {
+    // Simulate async operation
+    await Future.delayed(const Duration(milliseconds: 100));
+    _counter = value;
+  }
+
+  @override
+  Future<void> clearCounter() async {
+    // Simulate async operation
+    await Future.delayed(const Duration(milliseconds: 100));
+    _counter = 0;
+  }
+}
