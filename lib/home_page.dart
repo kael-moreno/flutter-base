@@ -9,9 +9,12 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         title: const Text('Clean Architecture Demo'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Colors.white,
+        elevation: 0,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -52,9 +55,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 32),
-            const Expanded(
-              child: _ArchitectureInfo(),
-            ),
+            const Expanded(child: _ArchitectureInfo()),
           ],
         ),
       ),
@@ -89,8 +90,8 @@ class HomePage extends StatelessWidget {
                     Text(
                       title,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 4),
                     Text(
@@ -122,9 +123,9 @@ class _ArchitectureInfo extends StatelessWidget {
           children: [
             Text(
               'Architecture Layers',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
             _buildLayerInfo(
@@ -145,9 +146,9 @@ class _ArchitectureInfo extends StatelessWidget {
             const SizedBox(height: 12),
             Text(
               'Technologies: Flutter • Riverpod • Dio • Clean Architecture',
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontStyle: FontStyle.italic,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.bodySmall?.copyWith(fontStyle: FontStyle.italic),
             ),
           ],
         ),
@@ -155,16 +156,17 @@ class _ArchitectureInfo extends StatelessWidget {
     );
   }
 
-  Widget _buildLayerInfo(BuildContext context, String title, String description) {
+  Widget _buildLayerInfo(
+    BuildContext context,
+    String title,
+    String description,
+  ) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: const TextStyle(fontWeight: FontWeight.w600),
-          ),
+          Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
