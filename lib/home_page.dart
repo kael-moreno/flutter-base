@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../features/counter/presentation/pages/counter_page.dart';
 import '../features/users/presentation/pages/users_page.dart';
+import '../pages/simple_users_page.dart';
 
 /// Home page with navigation to different features
 class HomePage extends StatelessWidget {
@@ -46,6 +47,19 @@ class HomePage extends StatelessWidget {
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const UsersPage()),
+              ),
+            ),
+            const SizedBox(height: 16),
+            _buildFeatureCard(
+              context,
+              title: '🚀 Simple API Demo',
+              description: 'New unified API system - minimal boilerplate!',
+              icon: Icons.rocket_launch_outlined,
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SimpleUsersPage(),
+                ),
               ),
             ),
             const SizedBox(height: 32),
