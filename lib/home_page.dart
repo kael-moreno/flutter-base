@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../pages/posts_page.dart';
+import '../pages/users_page.dart';
 
 /// Home page with navigation to different features
 class HomePage extends StatelessWidget {
@@ -28,7 +29,19 @@ class HomePage extends StatelessWidget {
             const SizedBox(height: 32),
             _buildFeatureCard(
               context,
-              title: '📝 Posts Demo',
+              title: '� Users Demo',
+              description:
+                  'Rich user data with expandable details and actions!',
+              icon: Icons.people_outlined,
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const UsersPage()),
+              ),
+            ),
+            const SizedBox(height: 16),
+            _buildFeatureCard(
+              context,
+              title: '�📝 Posts Demo',
               description:
                   'Complete API integration with unified architecture!',
               icon: Icons.article_outlined,
