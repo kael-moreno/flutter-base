@@ -227,8 +227,9 @@ Once everything works, delete the old feature folders.
 
 ## 🚀 Getting Started
 
-1. Check out the example in `lib/pages/simple_users_page.dart`
-2. Look at the model definition in `lib/shared/models/user_simple.dart`
-3. Try creating your own API integration using the same pattern
+1. Check out the working examples in `lib/pages/users_page.dart` and `lib/pages/posts_page.dart`
+2. Look at the model definitions in `lib/models/user.dart` and `lib/models/post.dart`
+3. Review the centralized providers in `lib/core/providers/api_providers.dart`
+4. Try creating your own API integration using the same pattern
 
 The new system maintains all the benefits of clean architecture while dramatically reducing complexity!
