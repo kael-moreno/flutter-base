@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import '../features/counter/presentation/pages/counter_page.dart';
-import '../features/users/presentation/pages/users_page.dart';
-import '../pages/simple_users_page.dart';
+import '../pages/posts_page.dart';
 
 /// Home page with navigation to different features
 class HomePage extends StatelessWidget {
@@ -11,7 +9,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Clean Architecture Demo')),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -30,40 +28,20 @@ class HomePage extends StatelessWidget {
             const SizedBox(height: 32),
             _buildFeatureCard(
               context,
-              title: 'Counter Feature',
-              description: 'Local state management with persistence',
-              icon: Icons.add_circle_outline,
+              title: '📝 Posts Demo',
+              description:
+                  'Complete API integration with unified architecture!',
+              icon: Icons.article_outlined,
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const CounterPage()),
-              ),
-            ),
-            const SizedBox(height: 16),
-            _buildFeatureCard(
-              context,
-              title: 'Users Feature',
-              description: 'API integration with Dio HTTP client',
-              icon: Icons.people_outline,
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const UsersPage()),
-              ),
-            ),
-            const SizedBox(height: 16),
-            _buildFeatureCard(
-              context,
-              title: '🚀 Simple API Demo',
-              description: 'New unified API system - minimal boilerplate!',
-              icon: Icons.rocket_launch_outlined,
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const SimpleUsersPage(),
-                ),
+                MaterialPageRoute(builder: (context) => const PostsPage()),
               ),
             ),
             const SizedBox(height: 32),
-            const Expanded(child: _ArchitectureInfo()),
+            const _ArchitectureInfo(),
+            const SizedBox(
+              height: 32,
+            ), // Extra padding at bottom for better scrolling
           ],
         ),
       ),
@@ -130,7 +108,7 @@ class _ArchitectureInfo extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Architecture Layers',
+              '🚀 Unified API Architecture',
               style: Theme.of(
                 context,
               ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
@@ -138,22 +116,22 @@ class _ArchitectureInfo extends StatelessWidget {
             const SizedBox(height: 12),
             _buildLayerInfo(
               context,
-              '📱 Presentation',
-              'UI, Widgets, State Management (Riverpod)',
+              '📱 Pages',
+              'UI + Provider in one file - No folders needed!',
             ),
             _buildLayerInfo(
               context,
-              '🏛️ Domain',
-              'Business Logic, Entities, Use Cases',
+              '📄 Models',
+              'Simple data models with fromJson/toJson',
             ),
             _buildLayerInfo(
               context,
-              '💾 Data',
-              'API Calls (Dio), Local Storage, Repositories',
+              '⚙️ Core',
+              'Unified API service handles all CRUD operations',
             ),
             const SizedBox(height: 12),
             Text(
-              'Technologies: Flutter • Riverpod • Dio • Clean Architecture',
+              '90% less boilerplate • 2 files per API • Clean Architecture benefits',
               style: Theme.of(
                 context,
               ).textTheme.bodySmall?.copyWith(fontStyle: FontStyle.italic),
