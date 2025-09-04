@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
             const SizedBox(height: 32),
             _buildFeatureCard(
               context,
-              title: '� Users Demo',
+              title: 'Users Demo',
               description:
                   'Rich user data with expandable details and actions!',
               icon: Icons.people_outlined,
@@ -41,7 +41,7 @@ class HomePage extends StatelessWidget {
             const SizedBox(height: 16),
             _buildFeatureCard(
               context,
-              title: '�📝 Posts Demo',
+              title: 'Posts Demo',
               description:
                   'Complete API integration with unified architecture!',
               icon: Icons.article_outlined,
