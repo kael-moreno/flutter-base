@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/user.dart';
-import '../core/api/api_service.dart';
-
-// Complete Users API integration in just 3 lines!
-final usersProvider = ApiServiceFactory.createListProvider<User>(
-  ApiConfig<User>(endpoint: '/users', fromJson: (json) => User.fromJson(json)),
-);
+import '../core/providers/api_providers.dart';
 
 class UsersPage extends ConsumerWidget {
   const UsersPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final usersState = ref.watch(usersProvider);
+    final usersState = ref.watch(ApiProviders.usersProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -22,7 +17,8 @@ class UsersPage extends ConsumerWidget {
         foregroundColor: Colors.white,
         actions: [
           IconButton(
-            onPressed: () => ref.read(usersProvider.notifier).refresh(),
+            onPressed: () =>
+                ref.read(ApiProviders.usersProvider.notifier).refresh(),
             icon: const Icon(Icons.refresh),
             tooltip: 'Refresh Users',
           ),
@@ -79,15 +75,17 @@ class UsersPage extends ConsumerWidget {
                         ),
                         const SizedBox(height: 16),
                         ElevatedButton(
-                          onPressed: () =>
-                              ref.read(usersProvider.notifier).loadData(),
+                          onPressed: () => ref
+                              .read(ApiProviders.usersProvider.notifier)
+                              .loadData(),
                           child: const Text('Retry'),
                         ),
                       ],
                     ),
                   )
                 : RefreshIndicator(
-                    onRefresh: () => ref.read(usersProvider.notifier).refresh(),
+                    onRefresh: () =>
+                        ref.read(ApiProviders.usersProvider.notifier).refresh(),
                     child: ListView.builder(
                       itemCount: usersState.items.length,
                       itemBuilder: (context, index) {
@@ -317,7 +315,7 @@ class UsersPage extends ConsumerWidget {
             onPressed: () {
               if (nameController.text.isNotEmpty &&
                   emailController.text.isNotEmpty) {
-                ref.read(usersProvider.notifier).create({
+                ref.read(ApiProviders.usersProvider.notifier).create({
                   'name': nameController.text,
                   'email': emailController.text,
                   'username': nameController.text.toLowerCase().replaceAll(

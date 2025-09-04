@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../core/api/api_service.dart';
-import '../models/post.dart';
-
-// Complete Posts API in just 3 lines!
-final postsProvider = ApiServiceFactory.createListProvider<Post>(
-  ApiConfig<Post>(endpoint: '/posts', fromJson: (json) => Post.fromJson(json)),
-);
+import '../core/providers/api_providers.dart';
 
 class PostsPage extends ConsumerWidget {
   const PostsPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final postsState = ref.watch(postsProvider);
+    final postsState = ref.watch(ApiProviders.postsProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -44,14 +38,15 @@ class PostsPage extends ConsumerWidget {
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton(
-                    onPressed: () => ref.refresh(postsProvider),
+                    onPressed: () => ref.refresh(ApiProviders.postsProvider),
                     child: const Text('Retry'),
                   ),
                 ],
               ),
             )
           : RefreshIndicator(
-              onRefresh: () => ref.read(postsProvider.notifier).refresh(),
+              onRefresh: () =>
+                  ref.read(ApiProviders.postsProvider.notifier).refresh(),
               child: ListView.builder(
                 itemCount: postsState.items.length,
                 itemBuilder: (context, index) {
