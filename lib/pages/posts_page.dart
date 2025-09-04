@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/core/baseui/error_api.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../core/providers/api_providers.dart';
 
@@ -18,31 +19,9 @@ class PostsPage extends ConsumerWidget {
       body: postsState.isLoading
           ? const Center(child: CircularProgressIndicator())
           : postsState.error != null
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.error_outline,
-                    size: 64,
-                    color: Theme.of(context).colorScheme.error,
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'Error: ${postsState.error}',
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.error,
-                      fontSize: 16,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () => ref.refresh(ApiProviders.postsProvider),
-                    child: const Text('Retry'),
-                  ),
-                ],
-              ),
+          ? ErrorApiWidget(
+              errorMessage: postsState.error!,
+              onRetry: () => ref.refresh(ApiProviders.postsProvider),
             )
           : RefreshIndicator(
               onRefresh: () =>
