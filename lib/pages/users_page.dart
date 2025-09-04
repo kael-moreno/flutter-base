@@ -26,26 +26,6 @@ class UsersPage extends ConsumerWidget {
       ),
       body: Column(
         children: [
-          // Status indicator
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(16),
-            color: Theme.of(context).colorScheme.surfaceContainerHighest,
-            child: Text(
-              usersState.isLoading
-                  ? '⏳ Loading users...'
-                  : usersState.error != null
-                  ? '❌ Error: ${usersState.error}'
-                  : '✅ ${usersState.items.length} users loaded',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: usersState.error != null
-                    ? Theme.of(context).colorScheme.error
-                    : Theme.of(context).colorScheme.onSurface,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-
           // Content
           Expanded(
             child: usersState.isLoading

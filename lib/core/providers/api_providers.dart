@@ -14,7 +14,7 @@ class ApiProviders {
   /// Provides CRUD operations for User entities from JSONPlaceholder /users endpoint
   static final usersProvider = ApiServiceFactory.createListProvider<User>(
     ApiConfig<User>(
-      endpoint: '/users',
+      endpoint: '/users123',
       fromJson: (json) => User.fromJson(json),
       toJson: (user) => user.toJson(),
       getId: (user) => user.id,
@@ -25,7 +25,7 @@ class ApiProviders {
   /// Provides CRUD operations for Post entities from JSONPlaceholder /posts endpoint
   static final postsProvider = ApiServiceFactory.createListProvider<Post>(
     ApiConfig<Post>(
-      endpoint: '/posts',
+      endpoint: '/posts123',
       fromJson: (json) => Post.fromJson(json),
       toJson: (post) => post.toJson(),
       getId: (post) => post.id,
