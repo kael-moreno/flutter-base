@@ -14,33 +14,36 @@ flutter analyze              # Run linter (uses flutter_lints)
 flutter build apk            # Build Android APK
 flutter build web            # Build for web
 flutter clean                # Clean build artifacts
-flutter pub run build_runner build  # Code generation (freezed/json_serializable deps are installed but models currently use manual serialization)
+dart run build_runner build  # Code generation (json_serializable)
 ```
 
 ## Architecture: Unified API Architecture
 
-This project uses a **Unified API Architecture** built on Riverpod + Dio + dartz (Either pattern). The core idea: **2 files per API feature** (a model + a provider registration) instead of 12+ files in traditional Clean Architecture.
+This project uses a **Unified API Architecture** built on Riverpod 3 + Dio + fpdart (Either pattern). The core idea: **2 files per API feature** (a model + a provider registration) instead of 12+ files in traditional Clean Architecture.
 
 ### Core Framework (`lib/core/`)
 
-- **`api/api_service.dart`** — `ApiServiceFactory` creates Riverpod `StateNotifierProvider`s from an `ApiConfig<T>`. Provides full CRUD (GET list, GET single, POST, PUT, DELETE) with automatic state management.
-- **`state/base_state.dart`** — Generic state classes: `DataListState<T>` and `DataItemState<T>` with loading/error/success transitions. `DataListNotifier<T>` and `DataItemNotifier<T>` are the corresponding StateNotifiers.
-- **`data/base_repository.dart`** — Generic HTTP operations returning `Either<Failure, T>` via dartz.
+- **`api/api_service.dart`** — `ApiServiceFactory` provides `createReadOnly` and `createCRUD` factory methods that return `ApiService<T>` instances from an `ApiConfig<T>`. Provides full CRUD (GET list, GET single, POST, PUT, DELETE).
+- **`state/base_state.dart`** — Generic state classes: `DataListState<T>` and `DataItemState<T>` with loading/error/success transitions. `DataListNotifier<T>` is an abstract `Notifier` base class for list operations.
+- **`data/base_repository.dart`** — Generic HTTP operations returning `Either<Failure, T>` via fpdart.
 - **`network/api_client.dart`** — Dio HTTP client configuration. Base URL: JSONPlaceholder (`https://jsonplaceholder.typicode.com`).
-- **`providers/api_providers.dart`** — Centralized provider registry with extension methods on `WidgetRef` (e.g., `ref.usersState`, `ref.usersNotifier`).
+- **`providers/api_providers.dart`** — Centralized provider registry with concrete `Notifier` subclasses (`UsersNotifier`, `PostsNotifier`), `NotifierProvider` registrations, `FutureProvider.family` for by-ID lookups, and extension methods on `WidgetRef` (e.g., `ref.usersState`, `ref.usersNotifier`).
 - **`errors/failures.dart`** — Error type definitions.
 - **`baseui/error_api.dart`** — Reusable `ErrorApiWidget` for consistent error display with retry.
 
 ### Adding a New API Feature
 
-1. Create a model in `lib/models/` with `fromJson`/`toJson`
-2. Register a provider in `lib/core/providers/api_providers.dart` using `ApiServiceFactory.createListProvider<T>(ApiConfig<T>(...))` and add extension methods on `WidgetRef`
+1. Create a model in `lib/models/` with `@JsonSerializable()` annotation and `part` directive for generated code
+2. Run `dart run build_runner build` to generate the `.g.dart` file
+3. Create a concrete `Notifier` subclass extending `DataListNotifier<T>` in `lib/core/providers/api_providers.dart`, overriding the `config` getter with your `ApiConfig<T>`
+4. Register a `NotifierProvider` and add extension methods on `WidgetRef`
 
 ### Key Patterns
 
 - Pages extend `ConsumerWidget` (Riverpod) and live in `lib/pages/`
 - State is accessed via `ref.watch()` on providers from `ApiProviders`
-- Error handling flows through `Either<Failure, T>` from dartz
+- Error handling flows through `Either<Failure, T>` from fpdart
+- Models use `@JsonSerializable()` with code generation (`.g.dart` files)
 - App entry (`lib/main.dart`) wraps the app in `ProviderScope` with Material 3 theming
 
 ## Testing
