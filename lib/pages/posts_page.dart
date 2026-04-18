@@ -21,7 +21,9 @@ class PostsPage extends ConsumerWidget {
           : postsState.error != null
           ? ErrorApiWidget(
               errorMessage: postsState.error!,
-              onRetry: () => ref.refresh(ApiProviders.postsProvider),
+              onRetry: () {
+                ref.invalidate(ApiProviders.postsProvider);
+              },
             )
           : RefreshIndicator(
               onRefresh: () =>

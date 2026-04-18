@@ -6,24 +6,26 @@ void main() {
   group('ApiProviders Tests', () {
     test('usersProvider should be defined', () {
       expect(ApiProviders.usersProvider, isNotNull);
-      expect(ApiProviders.usersProvider, isA<StateNotifierProvider>());
+      expect(ApiProviders.usersProvider, isA<NotifierProvider>());
     });
 
     test('postsProvider should be defined', () {
       expect(ApiProviders.postsProvider, isNotNull);
-      expect(ApiProviders.postsProvider, isA<StateNotifierProvider>());
+      expect(ApiProviders.postsProvider, isA<NotifierProvider>());
     });
 
-    test('userByIdProvider should create provider for specific ID', () {
+    test('userByIdProvider should be a FutureProvider.family', () {
+      expect(ApiProviders.userByIdProvider, isNotNull);
       final userProvider = ApiProviders.userByIdProvider(1);
       expect(userProvider, isNotNull);
-      expect(userProvider, isA<StateNotifierProvider>());
+      expect(userProvider, isA<FutureProvider>());
     });
 
-    test('postByIdProvider should create provider for specific ID', () {
+    test('postByIdProvider should be a FutureProvider.family', () {
+      expect(ApiProviders.postByIdProvider, isNotNull);
       final postProvider = ApiProviders.postByIdProvider(1);
       expect(postProvider, isNotNull);
-      expect(postProvider, isA<StateNotifierProvider>());
+      expect(postProvider, isA<FutureProvider>());
     });
 
     test('different ID providers should be different instances', () {
@@ -34,7 +36,6 @@ void main() {
     });
 
     test('providers should have correct types', () {
-      // Test that the provider types are correctly generic
       expect(ApiProviders.usersProvider.toString(), contains('User'));
       expect(ApiProviders.postsProvider.toString(), contains('Post'));
     });

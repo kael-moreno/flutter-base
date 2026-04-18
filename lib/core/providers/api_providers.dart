@@ -4,78 +4,63 @@ import '../state/base_state.dart';
 import '../../models/user.dart';
 import '../../models/post.dart';
 
-/// Centralized API providers for all entities
-/// This file contains all the provider definitions to keep pages clean
-class ApiProviders {
-  // Private constructor to prevent instantiation
-  ApiProviders._();
+// --- Concrete Notifiers ---
 
-  /// Users API Provider
-  /// Provides CRUD operations for User entities from JSONPlaceholder /users endpoint
-  static final usersProvider = ApiServiceFactory.createListProvider<User>(
-    ApiConfig<User>(
-      endpoint: '/users',
-      fromJson: (json) => User.fromJson(json),
-      toJson: (user) => user.toJson(),
-      getId: (user) => user.id,
-    ),
+class UsersNotifier extends DataListNotifier<User> {
+  @override
+  ApiConfig<User> get config => ApiConfig<User>(
+    endpoint: '/users',
+    fromJson: User.fromJson,
+    toJson: (user) => user.toJson(),
+    getId: (user) => user.id,
   );
-
-  /// Posts API Provider
-  /// Provides CRUD operations for Post entities from JSONPlaceholder /posts endpoint
-  static final postsProvider = ApiServiceFactory.createListProvider<Post>(
-    ApiConfig<Post>(
-      endpoint: '/posts',
-      fromJson: (json) => Post.fromJson(json),
-      toJson: (post) => post.toJson(),
-      getId: (post) => post.id,
-    ),
-  );
-
-  /// Individual User Provider Factory
-  /// Creates a provider for fetching a single user by ID
-  static StateNotifierProvider<DataItemNotifier<User>, DataItemState<User>>
-  userByIdProvider(int id) {
-    return ApiServiceFactory.createItemProvider<User>(
-      ApiConfig<User>(
-        endpoint: '/users',
-        fromJson: (json) => User.fromJson(json),
-        toJson: (user) => user.toJson(),
-        getId: (user) => user.id,
-      ),
-      id,
-    );
-  }
-
-  /// Individual Post Provider Factory
-  /// Creates a provider for fetching a single post by ID
-  static StateNotifierProvider<DataItemNotifier<Post>, DataItemState<Post>>
-  postByIdProvider(int id) {
-    return ApiServiceFactory.createItemProvider<Post>(
-      ApiConfig<Post>(
-        endpoint: '/posts',
-        fromJson: (json) => Post.fromJson(json),
-        toJson: (post) => post.toJson(),
-        getId: (post) => post.id,
-      ),
-      id,
-    );
-  }
 }
 
-/// Extension methods for easy access to common operations
+class PostsNotifier extends DataListNotifier<Post> {
+  @override
+  ApiConfig<Post> get config => ApiConfig<Post>(
+    endpoint: '/posts',
+    fromJson: Post.fromJson,
+    toJson: (post) => post.toJson(),
+    getId: (post) => post.id,
+  );
+}
+
+// --- Provider Registration ---
+
+class ApiProviders {
+  ApiProviders._();
+
+  static final usersProvider =
+      NotifierProvider<UsersNotifier, DataListState<User>>(UsersNotifier.new);
+
+  static final postsProvider =
+      NotifierProvider<PostsNotifier, DataListState<Post>>(PostsNotifier.new);
+
+  static final userByIdProvider = FutureProvider.family<User, int>((ref, id) async {
+    final service = ApiServiceFactory.createReadOnly(ApiConfig<User>(
+      endpoint: '/users',
+      fromJson: User.fromJson,
+    ));
+    final result = await service.getById(id);
+    return result.fold((f) => throw Exception(f.message), (user) => user);
+  });
+
+  static final postByIdProvider = FutureProvider.family<Post, int>((ref, id) async {
+    final service = ApiServiceFactory.createReadOnly(ApiConfig<Post>(
+      endpoint: '/posts',
+      fromJson: Post.fromJson,
+    ));
+    final result = await service.getById(id);
+    return result.fold((f) => throw Exception(f.message), (post) => post);
+  });
+}
+
+// --- Extension Methods ---
+
 extension ApiProvidersExtension on WidgetRef {
-  /// Get users state
   DataListState<User> get usersState => watch(ApiProviders.usersProvider);
-
-  /// Get posts state
   DataListState<Post> get postsState => watch(ApiProviders.postsProvider);
-
-  /// Get users notifier for operations
-  DataListNotifier<User> get usersNotifier =>
-      read(ApiProviders.usersProvider.notifier);
-
-  /// Get posts notifier for operations
-  DataListNotifier<Post> get postsNotifier =>
-      read(ApiProviders.postsProvider.notifier);
+  UsersNotifier get usersNotifier => read(ApiProviders.usersProvider.notifier);
+  PostsNotifier get postsNotifier => read(ApiProviders.postsProvider.notifier);
 }

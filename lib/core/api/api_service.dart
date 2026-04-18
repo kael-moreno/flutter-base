@@ -1,8 +1,6 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import '../network/api_client.dart';
 import '../data/base_repository.dart';
-import '../state/base_state.dart';
 import '../errors/failures.dart';
 
 /// Simple API configuration for each endpoint
@@ -123,57 +121,5 @@ class ApiServiceFactory {
   /// Create a full CRUD API service
   static ApiService<T> createCRUD<T>(ApiConfig<T> config) {
     return ApiService<T>(_repository, config);
-  }
-
-  /// Create a StateNotifier for list operations with minimal setup
-  static StateNotifierProvider<DataListNotifier<T>, DataListState<T>>
-  createListProvider<T>(ApiConfig<T> config) {
-    final service = ApiService<T>(_repository, config);
-
-    return StateNotifierProvider<DataListNotifier<T>, DataListState<T>>((ref) {
-      return DataListNotifier<T>(
-        fetchList: () => service.getAll(),
-        createItem: config.toJson != null
-            ? (data) =>
-                  service.create(_createFromData<T>(data, config.fromJson))
-            : null,
-        updateItem: (config.toJson != null && config.getId != null)
-            ? (item, data) =>
-                  service.update(_updateItemWithData<T>(item, data, config))
-            : null,
-        deleteItem: config.getId != null
-            ? (item) => service.delete(item)
-            : null,
-      );
-    });
-  }
-
-  /// Create a StateNotifier for single item operations
-  static StateNotifierProvider<DataItemNotifier<T>, DataItemState<T>>
-  createItemProvider<T>(ApiConfig<T> config, dynamic id) {
-    final service = ApiService<T>(_repository, config);
-
-    return StateNotifierProvider<DataItemNotifier<T>, DataItemState<T>>((ref) {
-      return DataItemNotifier<T>(fetchItem: () => service.getById(id));
-    });
-  }
-
-  static T _createFromData<T>(
-    Map<String, dynamic> data,
-    T Function(Map<String, dynamic>) fromJson,
-  ) {
-    return fromJson(data);
-  }
-
-  static T _updateItemWithData<T>(
-    T item,
-    Map<String, dynamic> data,
-    ApiConfig<T> config,
-  ) {
-    // For updates, we typically merge the existing item with new data
-    // This is a simplified approach - you might want to customize this
-    final existingJson = config.toJson!(item);
-    final mergedJson = {...existingJson, ...data};
-    return config.fromJson(mergedJson);
   }
 }
