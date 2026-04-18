@@ -39,7 +39,7 @@ dependencies:
   flutter_riverpod: ^2.4.9
   
   # Functional Programming
-  dartz: ^0.10.1
+  fpdart: ^1.1.0
   
   # HTTP Client
   dio: ^5.9.2

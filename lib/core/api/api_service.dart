@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 import '../network/api_client.dart';
 import '../data/base_repository.dart';
 import '../state/base_state.dart';
@@ -59,7 +59,7 @@ class ApiService<T> {
   Future<Either<Failure, T>> create(T item) {
     if (_config.toJson == null) {
       return Future.value(
-        Left(
+        Either.left(
           ValidationFailure(
             message: 'toJson function not provided for create operation',
           ),
@@ -78,7 +78,7 @@ class ApiService<T> {
   Future<Either<Failure, T>> update(T item) {
     if (_config.toJson == null || _config.getId == null) {
       return Future.value(
-        Left(
+        Either.left(
           ValidationFailure(
             message: 'toJson and getId functions required for update operation',
           ),
@@ -98,7 +98,7 @@ class ApiService<T> {
   Future<Either<Failure, bool>> delete(T item) {
     if (_config.getId == null) {
       return Future.value(
-        Left(
+        Either.left(
           ValidationFailure(
             message: 'getId function required for delete operation',
           ),
