@@ -41,14 +41,9 @@ dependencies:
   # Functional Programming
   dartz: ^0.10.1
   
-  # Dependency Injection
-  get_it: ^7.6.4
-  
   # HTTP Client
   dio: ^5.3.4
   
-  # Code Generation
-  freezed_annotation: ^2.4.1
   json_annotation: ^4.8.1
 
 dev_dependencies:
@@ -64,7 +59,6 @@ dev_dependencies:
   
   # Code Generation
   build_runner: ^2.4.7
-  freezed: ^2.4.7
   json_serializable: ^6.7.1
   
   # Testing
