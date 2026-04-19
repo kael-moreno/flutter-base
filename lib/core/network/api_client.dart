@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:dio/dio.dart';
 
 /// HTTP client configuration for the application
@@ -40,8 +41,8 @@ class ApiClient {
       InterceptorsWrapper(
         onError: (error, handler) {
           // Log error details
-          print('API Error: ${error.message}');
-          print('Status Code: ${error.response?.statusCode}');
+          debugPrint('API Error: ${error.message}');
+          debugPrint('Status Code: ${error.response?.statusCode}');
           handler.next(error);
         },
       ),

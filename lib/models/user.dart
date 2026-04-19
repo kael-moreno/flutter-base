@@ -1,4 +1,8 @@
-/// Complete User model matching JSONPlaceholder API response
+import 'package:json_annotation/json_annotation.dart';
+
+part 'user.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class User {
   final int id;
   final String name;
@@ -20,31 +24,9 @@ class User {
     required this.company,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      id: json['id'] as int,
-      name: json['name'] as String,
-      username: json['username'] as String,
-      email: json['email'] as String,
-      address: Address.fromJson(json['address'] as Map<String, dynamic>),
-      phone: json['phone'] as String,
-      website: json['website'] as String,
-      company: Company.fromJson(json['company'] as Map<String, dynamic>),
-    );
-  }
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'username': username,
-      'email': email,
-      'address': address.toJson(),
-      'phone': phone,
-      'website': website,
-      'company': company.toJson(),
-    };
-  }
+  Map<String, dynamic> toJson() => _$UserToJson(this);
 
   @override
   bool operator ==(Object other) =>
@@ -55,7 +37,7 @@ class User {
   int get hashCode => id.hashCode;
 }
 
-/// Address nested object
+@JsonSerializable(explicitToJson: true)
 class Address {
   final String street;
   final String suite;
@@ -71,46 +53,27 @@ class Address {
     required this.geo,
   });
 
-  factory Address.fromJson(Map<String, dynamic> json) {
-    return Address(
-      street: json['street'] as String,
-      suite: json['suite'] as String,
-      city: json['city'] as String,
-      zipcode: json['zipcode'] as String,
-      geo: Geo.fromJson(json['geo'] as Map<String, dynamic>),
-    );
-  }
+  factory Address.fromJson(Map<String, dynamic> json) =>
+      _$AddressFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    return {
-      'street': street,
-      'suite': suite,
-      'city': city,
-      'zipcode': zipcode,
-      'geo': geo.toJson(),
-    };
-  }
+  Map<String, dynamic> toJson() => _$AddressToJson(this);
 
   String get fullAddress => '$street, $suite, $city $zipcode';
 }
 
-/// Geographic coordinates nested object
+@JsonSerializable()
 class Geo {
   final String lat;
   final String lng;
 
   const Geo({required this.lat, required this.lng});
 
-  factory Geo.fromJson(Map<String, dynamic> json) {
-    return Geo(lat: json['lat'] as String, lng: json['lng'] as String);
-  }
+  factory Geo.fromJson(Map<String, dynamic> json) => _$GeoFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    return {'lat': lat, 'lng': lng};
-  }
+  Map<String, dynamic> toJson() => _$GeoToJson(this);
 }
 
-/// Company nested object
+@JsonSerializable()
 class Company {
   final String name;
   final String catchPhrase;
@@ -122,15 +85,8 @@ class Company {
     required this.bs,
   });
 
-  factory Company.fromJson(Map<String, dynamic> json) {
-    return Company(
-      name: json['name'] as String,
-      catchPhrase: json['catchPhrase'] as String,
-      bs: json['bs'] as String,
-    );
-  }
+  factory Company.fromJson(Map<String, dynamic> json) =>
+      _$CompanyFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    return {'name': name, 'catchPhrase': catchPhrase, 'bs': bs};
-  }
+  Map<String, dynamic> toJson() => _$CompanyToJson(this);
 }

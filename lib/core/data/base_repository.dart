@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:dio/dio.dart';
 import '../errors/failures.dart';
 import '../network/api_client.dart';
@@ -31,18 +31,18 @@ class BaseRepository {
             .map((json) => fromJson(json as Map<String, dynamic>))
             .toList();
 
-        return Right(items);
+        return Either.right(items);
       } else {
-        return Left(
+        return Either.left(
           NetworkFailure(
             message: 'Failed to fetch data: ${response.statusCode}',
           ),
         );
       }
     } on DioException catch (e) {
-      return Left(_handleDioException(e));
+      return Either.left(_handleDioException(e));
     } catch (e) {
-      return Left(GeneralFailure(message: e.toString()));
+      return Either.left(GeneralFailure(message: e.toString()));
     }
   }
 
@@ -63,18 +63,18 @@ class BaseRepository {
             ? response.data
             : response.data['data'];
 
-        return Right(fromJson(json));
+        return Either.right(fromJson(json));
       } else {
-        return Left(
+        return Either.left(
           NetworkFailure(
             message: 'Failed to fetch item: ${response.statusCode}',
           ),
         );
       }
     } on DioException catch (e) {
-      return Left(_handleDioException(e));
+      return Either.left(_handleDioException(e));
     } catch (e) {
-      return Left(GeneralFailure(message: e.toString()));
+      return Either.left(GeneralFailure(message: e.toString()));
     }
   }
 
@@ -97,18 +97,18 @@ class BaseRepository {
             ? response.data
             : response.data['data'];
 
-        return Right(fromJson(json));
+        return Either.right(fromJson(json));
       } else {
-        return Left(
+        return Either.left(
           NetworkFailure(
             message: 'Failed to create item: ${response.statusCode}',
           ),
         );
       }
     } on DioException catch (e) {
-      return Left(_handleDioException(e));
+      return Either.left(_handleDioException(e));
     } catch (e) {
-      return Left(GeneralFailure(message: e.toString()));
+      return Either.left(GeneralFailure(message: e.toString()));
     }
   }
 
@@ -131,18 +131,18 @@ class BaseRepository {
             ? response.data
             : response.data['data'];
 
-        return Right(fromJson(json));
+        return Either.right(fromJson(json));
       } else {
-        return Left(
+        return Either.left(
           NetworkFailure(
             message: 'Failed to update item: ${response.statusCode}',
           ),
         );
       }
     } on DioException catch (e) {
-      return Left(_handleDioException(e));
+      return Either.left(_handleDioException(e));
     } catch (e) {
-      return Left(GeneralFailure(message: e.toString()));
+      return Either.left(GeneralFailure(message: e.toString()));
     }
   }
 
@@ -158,18 +158,18 @@ class BaseRepository {
       );
 
       if (response.statusCode == 200 || response.statusCode == 204) {
-        return const Right(true);
+        return Either.right(true);
       } else {
-        return Left(
+        return Either.left(
           NetworkFailure(
             message: 'Failed to delete item: ${response.statusCode}',
           ),
         );
       }
     } on DioException catch (e) {
-      return Left(_handleDioException(e));
+      return Either.left(_handleDioException(e));
     } catch (e) {
-      return Left(GeneralFailure(message: e.toString()));
+      return Either.left(GeneralFailure(message: e.toString()));
     }
   }
 
