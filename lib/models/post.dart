@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'post.g.dart';
+
+@JsonSerializable()
 class Post {
   final int userId;
   final int id;
@@ -11,18 +16,9 @@ class Post {
     required this.body,
   });
 
-  factory Post.fromJson(Map<String, dynamic> json) {
-    return Post(
-      userId: json['userId'] as int,
-      id: json['id'] as int,
-      title: json['title'] as String,
-      body: json['body'] as String,
-    );
-  }
+  factory Post.fromJson(Map<String, dynamic> json) => _$PostFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    return {'userId': userId, 'id': id, 'title': title, 'body': body};
-  }
+  Map<String, dynamic> toJson() => _$PostToJson(this);
 
   @override
   bool operator ==(Object other) =>
