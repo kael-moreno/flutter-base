@@ -56,7 +56,7 @@ abstract class DataListNotifier<T> extends Notifier<DataListState<T>> {
 
   @override
   DataListState<T> build() {
-    loadData();
+    Future.microtask(() => loadData());
     return DataListState<T>(isLoading: true);
   }
 
